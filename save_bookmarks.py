@@ -1,7 +1,11 @@
 #!/usr/bin/python3
 import os
 from shutil import copyfile
-
+'''
+    The script is for creating a backup file of the google-chrome bookmarks for unix
+    It requires installed Dropbox
+    otherwise it will just create a directory called in the same way.
+'''
 HOME = os.environ['HOME']
 BOOKMARKS_FILENAME = "Bookmarks"
 BOOKMARKS_PATH = HOME + "/.config/google-chrome/Default/" + BOOKMARKS_FILENAME

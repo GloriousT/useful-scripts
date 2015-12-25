@@ -9,6 +9,8 @@ CLOUD_STORAGE_PATH = HOME + "/Dropbox/backups/"
 MY_BOOKMARKS_FILE = CLOUD_STORAGE_PATH + BOOKMARKS_FILENAME
 MY_BOOKMARKS_BACKUP_FILE = MY_BOOKMARKS_FILE + ".bak"
 OLD_BACKUP = MY_BOOKMARKS_BACKUP_FILE + ".old"
+exist_file = os.path.isfile
+rename_file = os.rename
 
 
 def main():
@@ -26,7 +28,7 @@ def main():
 
 
 def is_initial_bookmarks_exist():
-    return file_exists(BOOKMARKS_PATH)
+    return exist_file(BOOKMARKS_PATH)
 
 
 def prepare_destination_directory():
@@ -40,21 +42,13 @@ def rename_existing_bookmark_files():
         print("updating existing file and bak")
         rename_file(MY_BOOKMARKS_BACKUP_FILE, OLD_BACKUP)
         rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
-    elif file_exists(MY_BOOKMARKS_FILE):
+    elif exist_file(MY_BOOKMARKS_FILE):
         print("updating existing file only")
         rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
 
 
-def rename_file(old_name, new_name):
-    os.rename(old_name, new_name)
-
-
 def file_and_backup_exist():
-    return file_exists(MY_BOOKMARKS_FILE) and file_exists(MY_BOOKMARKS_BACKUP_FILE)
-
-
-def file_exists(filename):
-    return os.path.isfile(filename)
+    return exist_file(MY_BOOKMARKS_FILE) and exist_file(MY_BOOKMARKS_BACKUP_FILE)
 
 
 def copy_new_bookmark_file():
@@ -64,7 +58,7 @@ def copy_new_bookmark_file():
 
 def remove_old_backup_file():
     print("removing old file if exists")
-    if os.path.isfile(OLD_BACKUP):
+    if exist_file(OLD_BACKUP):
         os.remove(OLD_BACKUP)
 
 if __name__ == '__main__':

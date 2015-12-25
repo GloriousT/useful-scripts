@@ -26,7 +26,7 @@ def main():
 
 
 def is_initial_bookmarks_exist():
-    return os.path.isfile(BOOKMARKS_PATH)
+    return file_exists(BOOKMARKS_PATH)
 
 
 def prepare_destination_directory():
@@ -38,23 +38,23 @@ def prepare_destination_directory():
 def rename_existing_bookmark_files():
     if file_and_backup_exist():
         print("updating existing file and bak")
-        os.rename(MY_BOOKMARKS_BACKUP_FILE, OLD_BACKUP)
-        os.rename(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
-    elif file_exists():
+        rename_file(MY_BOOKMARKS_BACKUP_FILE, OLD_BACKUP)
+        rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
+    elif file_exists(MY_BOOKMARKS_FILE):
         print("updating existing file only")
-        os.rename(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
+        rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
+
+
+def rename_file(old_name, new_name):
+    os.rename(old_name, new_name)
 
 
 def file_and_backup_exist():
-    return file_exists() and backup_exists()
+    return file_exists(MY_BOOKMARKS_FILE) and file_exists(MY_BOOKMARKS_BACKUP_FILE)
 
 
-def backup_exists():
-    return os.path.isfile(MY_BOOKMARKS_BACKUP_FILE)
-
-
-def file_exists():
-    return os.path.isfile(MY_BOOKMARKS_FILE)
+def file_exists(filename):
+    return os.path.isfile(filename)
 
 
 def copy_new_bookmark_file():

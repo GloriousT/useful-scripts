@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 from shutil import copyfile
+
 '''
     The script is for creating a backup file of the google-chrome bookmarks for unix
     It requires installed Dropbox
@@ -27,8 +28,8 @@ def main():
         copy_new_bookmark_file()
         remove_old_backup_file()
     else:
-        print("No bookmarks found to save!")
-        print("Finishing!")
+        print("No bookmarks found to save!\n\
+              Operation aborted")
 
 
 def is_initial_bookmarks_exist():
@@ -43,12 +44,14 @@ def prepare_destination_directory():
 
 def rename_existing_bookmark_files():
     if file_and_backup_exist():
-        print("updating existing file and bak")
         rename_file(MY_BOOKMARKS_BACKUP_FILE, OLD_BACKUP)
-        rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
+        rename_current_file_as_backup()
     elif exist_file(MY_BOOKMARKS_FILE):
-        print("updating existing file only")
-        rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
+        rename_current_file_as_backup()
+
+
+def rename_current_file_as_backup():
+    rename_file(MY_BOOKMARKS_FILE, MY_BOOKMARKS_BACKUP_FILE)
 
 
 def file_and_backup_exist():
@@ -56,14 +59,13 @@ def file_and_backup_exist():
 
 
 def copy_new_bookmark_file():
-    print("copy in progress")
     copyfile(BOOKMARKS_PATH, MY_BOOKMARKS_FILE)
 
 
 def remove_old_backup_file():
-    print("removing old file if exists")
     if exist_file(OLD_BACKUP):
         os.remove(OLD_BACKUP)
+
 
 if __name__ == '__main__':
     main()

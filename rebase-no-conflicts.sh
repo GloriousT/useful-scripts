@@ -10,6 +10,7 @@ function rebase_on_latest_master {
 	echo "No changes detected, rebasing"
 	git checkout master
 	git -c core.quotepath=false fetch origin --progress --prune
+	git -c core.quotepath=false rebase origin/master
 	git checkout -
 	git rebase master
 }
@@ -17,7 +18,7 @@ function rebase_on_latest_master {
 PROJECT_PATH=
 set -o history
 # set -o verbose
-cd $PROJECT_PATH
+cd ${PROJECT_PATH}
 
 output="$(git status -uno)"
 echo $output

@@ -15,7 +15,7 @@ function rebase_on_latest_master {
 	git rebase master
 }
 
-PROJECT_PATH=
+PROJECT_PATH=$0
 set -o history
 # set -o verbose
 cd ${PROJECT_PATH}

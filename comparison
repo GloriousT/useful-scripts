@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -o verbose
+
+curl https://example.com/ > new_out && hello=($(md5sum new_out)) && world=($(md5sum out2))
+
+echo $hello
+echo $world
+
+function compare {	
+	if [[ $hello == $world ]]; then
+        	echo 1
+	else
+        	echo 0
+	fi
+}
+
+compare
+
